@@ -8,13 +8,14 @@ public class DiceManager {
 	private int globalSave;
 	
 	public DiceManager(){
+		dgs=new ArrayList<DiceGroup>();
 		for(int i=0;i<5;i++){
 			dgs.add(new DiceGroup());
 		}
-		for(int i=0;i<30;i++){
-			dgs.get(WHITE).addDice(new Dice());
-		}
-		globalSave=4;
+	}
+	
+	public void addDice(Dice d){
+		dgs.get(WHITE).addDice(d);
 	}
 	
 	public void rollAll(){
@@ -49,5 +50,9 @@ public class DiceManager {
 	
 	public void setGroupSave(int GroupColour, int save){
 		dgs.get(GroupColour).setSave(save);
+	}
+	
+	public DiceGroup getDiceGroup(int Colour){
+		return dgs.get(Colour);
 	}
 }
