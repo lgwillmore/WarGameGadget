@@ -11,23 +11,22 @@ public class Dice implements Runnable{
 	private static final long MAX_AIRTIME = 500;// milliseconds
 	private static final double BOUNCE_PROBABILITY = 0.80;
 	private long startTime;
+	private int groupColour;
 	
 	
-	public Dice(){
+	public Dice(int colour){
 		SIDES=6;
+		groupColour=colour;
 		init();
 	}
 	
-	public Dice(int sides){
-		SIDES=sides;
-		init();
-	}
+	
 	
 	private void init(){
 		myRand=new Random();
 		long seed= (long)(Math.random()*(long)10000);
 		myRand.setSeed(System.currentTimeMillis()+seed);
-		roll();
+		SIDE_UP=1;
 	}
 	
 	public void run() {
@@ -68,6 +67,10 @@ public class Dice implements Runnable{
 
 	public int getSideUp(){
 		return SIDE_UP;
+	}
+	
+	public int getGroupColour(){
+		return groupColour;
 	}
 	
 	

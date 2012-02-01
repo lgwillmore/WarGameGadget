@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 public class DiceGroupView {
 	private ArrayList<DiceView> diceVs;
 	private DiceGroup dGroup;
+	
 	public DiceGroupView(DiceGroup dg){
 		diceVs=new ArrayList<DiceView>();
 		dGroup=dg;

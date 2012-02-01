@@ -6,9 +6,11 @@ public class DiceGroup {
 	
 	private ArrayList<Dice> dice;
 	private int groupSave;
+	private int colour;
 	
-	public DiceGroup(){
+	public DiceGroup(int colour){
 		dice=new ArrayList<Dice>();
+		this.colour=colour;
 		groupSave=4;
 	}
 	

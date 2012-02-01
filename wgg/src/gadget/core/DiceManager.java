@@ -10,7 +10,7 @@ public class DiceManager {
 	public DiceManager(){
 		dgs=new ArrayList<DiceGroup>();
 		for(int i=0;i<5;i++){
-			dgs.add(new DiceGroup());
+			dgs.add(new DiceGroup(i));
 		}
 	}
 	
