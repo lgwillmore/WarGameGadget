@@ -14,15 +14,16 @@ public class DiceView {
 	private Dice dice;
 	
 	public DiceView(int x, int y, int width, Dice d){
-		this.x=x;
-		this.y=y;
-		this.width=width;
+		this.x=new Float(x);
+		this.y=new Float(y);
+		this.width=new Float(width);
 		this.dice=d;
 		
 	}
 	public void draw(Canvas c) {
 		Paint p=new Paint();
 		p.setColor(Color.BLUE);
+		int cwidth=c.getWidth();
 		c.drawRect(x, y, x+width, y+width, p);
 	}
 }

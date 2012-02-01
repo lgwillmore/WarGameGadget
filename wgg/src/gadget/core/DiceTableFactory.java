@@ -50,14 +50,16 @@ public class DiceTableFactory {
 	}
 
 	public void calculateSpacing(DisplayMetrics screen){
-		//This might be wrong, might need to deal with the actual space available.
-		//ie, the space that the view will occupy.
 		
-		// possibly to solve scaling issue, need to tell the canvas how big it is on the screen?
 		int width=screen.widthPixels;
 		int height=screen.heightPixels;
 		pu= width/144;
-		for (int i:ratios)i=i*pu;
+		int rem=width%144;
+		int addtoDice=rem/5;
+		for (int i=0;i<6;i++){
+			ratios[i]=ratios[i]*pu;
+		}
+		ratios[diceWidth]=ratios[diceWidth]+addtoDice;
 		topRowspace=ratios[gap]+2*ratios[border]+ratios[topgap];
 		leftColspace=2*ratios[gap]+2*ratios[border];
 		midRowspace=ratios[gap]+4*ratios[border]+ratios[topgap]+ratios[diceWidth];
