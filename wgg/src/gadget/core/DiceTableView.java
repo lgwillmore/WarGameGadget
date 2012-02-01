@@ -23,16 +23,12 @@ public class DiceTableView extends SurfaceView implements Runnable{
 	private HashMap<Pair,DiceView> lookUpDiceTable;
 	private SurfaceHolder holder;
 	private boolean disabled=false;
-	private int width;
-	private int height;
-	public DiceTableView(Context context, ArrayList<DiceGroupView> dg, 
-			HashMap<Pair,DiceView> lookupDice,int width,int height) {
+	
+	public DiceTableView(Context context, ArrayList<DiceGroupView> dg, HashMap<Pair,DiceView> lookupDice) {
 		super(context);
 		diceGroups=dg;
 		lookUpDiceTable=lookupDice;
 		holder=this.getHolder();
-		this.width=width;
-		this.height=height;
 	}
 
 	@Override
@@ -40,7 +36,7 @@ public class DiceTableView extends SurfaceView implements Runnable{
 		while(!disabled){
 			if(!holder.getSurface().isValid())continue;
 			Canvas c=holder.lockCanvas();
-			c.drawARGB(255, 150,150, 0);
+			c.drawARGB(255, 0,0, 0);
 			for(DiceGroupView dgv:diceGroups)dgv.draw(c);
 			holder.unlockCanvasAndPost(c);
 		}
@@ -54,9 +50,11 @@ public class DiceTableView extends SurfaceView implements Runnable{
 		   super.onMeasure(widthMeasureSpec, heightMeasureSpec-80);
 	}
 
-	public Object getInteractiveEntity(){
+	public Interactible getInteractible(float x,float y){
+		for(DiceView dv:lookUpDiceTable.values()){
+			if(dv.isMe(x,y))return dv;
+		}
 		return null;
-		// TODO might need this to look up what has been touched or dragged, etc.
 	}
 	
 	

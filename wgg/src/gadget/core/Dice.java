@@ -12,6 +12,7 @@ public class Dice implements Runnable{
 	private static final double BOUNCE_PROBABILITY = 0.80;
 	private long startTime;
 	private int groupColour;
+	private boolean selected=false;
 	
 	
 	public Dice(int colour){
@@ -71,6 +72,15 @@ public class Dice implements Runnable{
 	
 	public int getGroupColour(){
 		return groupColour;
+	}
+	
+	public boolean isSelected(){
+		return selected;
+	}
+
+
+	public void setSelected() {
+		selected=!selected;
 	}
 	
 	

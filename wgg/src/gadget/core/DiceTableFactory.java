@@ -15,8 +15,6 @@ public class DiceTableFactory {
 	
 	
 	int pu;
-	int tvheight;
-	int tvwidth;
 	int[] ratios = {20,1,2,5,20,4};
 	int diceWidth=0,border=1,gap=2,topgap=3,tagwidth=4,taglength=5;
 	int topRowspace,leftColspace,midRowspace,midColSpace;
@@ -43,7 +41,7 @@ public class DiceTableFactory {
 		resizeBitmaps();
 		buildDiceViews();
 		buildDGVs();		
-		return new DiceTableView(context,dgvs,diceSlots,tvwidth,tvheight);
+		return new DiceTableView(context,dgvs,diceSlots);
 	}
 	
 	private void resizeBitmaps(){
@@ -68,7 +66,6 @@ public class DiceTableFactory {
 	public void calculateSpacing(DisplayMetrics screen){
 		
 		int width=screen.widthPixels;
-		tvwidth=width;
 		int height=screen.heightPixels;
 		pu= width/144;
 		int rem=width%144;
@@ -102,7 +99,6 @@ public class DiceTableFactory {
 			row++;
 			x=0;
 		}
-		tvheight=y+midRowspace+pu;
 	}
 }
 

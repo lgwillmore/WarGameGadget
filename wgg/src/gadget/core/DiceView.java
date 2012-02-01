@@ -11,7 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.ImageView;
 
-public class DiceView {
+public class DiceView implements Interactible{
 	private float x,y,width;
 	private Dice dice;
 	private static ArrayList<ArrayList<Bitmap>> diceFaces;
@@ -30,7 +30,12 @@ public class DiceView {
 		/*Paint p=new Paint();
 		p.setColor(Color.BLUE);
 		c.drawRect(x, y, x+width, y+width, p);*/
-		c.drawBitmap(lookUpDiceFace(), x, y, null);
+		if(!dice.isSelected())c.drawBitmap(lookUpDiceFace(), x, y, null);
+		else{
+			Paint p=new Paint();
+			p.setColor(Color.BLUE);
+			c.drawRect(x, y, x+width, y+width, p);
+		}
 	}
 	
 	public Bitmap lookUpDiceFace(){
@@ -41,5 +46,17 @@ public class DiceView {
 	
 	public static void setDiceFaces(ArrayList<ArrayList<Bitmap>> faces){
 		diceFaces=faces;
+	}
+	@Override
+	public boolean isMe(float x, float y) {
+		if(x>=this.x&&
+				x<=(this.x+width)&&
+						y>=this.y&&
+						y<=(this.y+width))return true;
+		return false;
+	}
+	@Override
+	public void touched() {
+		dice.setSelected();
 	}
 }

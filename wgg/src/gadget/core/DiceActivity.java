@@ -12,81 +12,113 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class DiceActivity extends Activity implements OnClickListener{
-	
+public class DiceActivity extends Activity implements OnClickListener, OnTouchListener {
+
 	private DiceManager dMan;
 	private DiceTableView dView;
 	private DisplayMetrics screen;
 	private LinearLayout top;
-	
-	
+	Button roll;
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-       
-        
-        
-        dMan=new DiceManager();
-        screen=new DisplayMetrics();       
-        getWindowManager().getDefaultDisplay().getMetrics(screen);
-        DiceTableFactory df = new DiceTableFactory(this,screen,dMan,buildBitmaps());
-        dView=df.getDiceTableView();
-        buildLayout();
-        setContentView(top);
-        new Thread(dView).start();
-    }
-    
-    private void buildLayout(){
-    	top=new LinearLayout(this);
-    	top.setOrientation(LinearLayout.VERTICAL);
-    	android.view.ViewGroup.LayoutParams p=dView.getLayoutParams();
-    	
-    	top.addView(dView);
-    	Button roll=new Button(this);
-    	roll.setOnClickListener(this);
-    	roll.setText("Roll");
-    	top.addView(roll);
-    }
-    
-    private  ArrayList<ArrayList<Bitmap>> buildBitmaps(){
-    	 //
-        ArrayList<ArrayList<Bitmap>> diceFaces=new ArrayList<ArrayList<Bitmap>>();
-        BitmapFactory bf=new BitmapFactory();
-		for(int i=0;i<4;i++){
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		dMan = new DiceManager();
+		screen = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(screen);
+		DiceTableFactory df = new DiceTableFactory(this, screen, dMan,
+				buildBitmaps());
+		dView = df.getDiceTableView();
+		buildLayout();
+		setContentView(top);
+		new Thread(dView).start();
+	}
+
+	private void buildLayout() {
+		top = new LinearLayout(this);
+		top.setOrientation(LinearLayout.VERTICAL);
+		dView.setId(1);
+		dView.setOnTouchListener(this);
+		top.addView(dView);
+		roll = new Button(this);
+		roll.setOnClickListener(this);
+		roll.setText(R.string.rollAllButton);
+		roll.setId(0);
+		top.addView(roll);
+	}
+
+	private ArrayList<ArrayList<Bitmap>> buildBitmaps() {
+		//
+		ArrayList<ArrayList<Bitmap>> diceFaces = new ArrayList<ArrayList<Bitmap>>();
+		BitmapFactory bf = new BitmapFactory();
+		for (int i = 0; i < 4; i++) {
 			diceFaces.add(new ArrayList<Bitmap>());
 		}
-		diceFaces.get(0).add(bf.decodeResource(this.getResources(),R.drawable.w_one));
-		diceFaces.get(0).add(bf.decodeResource(this.getResources(),R.drawable.w_two));
-		diceFaces.get(0).add(bf.decodeResource(this.getResources(),R.drawable.w_three));
-		diceFaces.get(0).add(bf.decodeResource(this.getResources(),R.drawable.w_four));
-		diceFaces.get(0).add(bf.decodeResource(this.getResources(),R.drawable.w_five));
-		diceFaces.get(0).add(bf.decodeResource(this.getResources(),R.drawable.w_six));
+		diceFaces.get(0).add(
+				bf.decodeResource(this.getResources(), R.drawable.w_one));
+		diceFaces.get(0).add(
+				bf.decodeResource(this.getResources(), R.drawable.w_two));
+		diceFaces.get(0).add(
+				bf.decodeResource(this.getResources(), R.drawable.w_three));
+		diceFaces.get(0).add(
+				bf.decodeResource(this.getResources(), R.drawable.w_four));
+		diceFaces.get(0).add(
+				bf.decodeResource(this.getResources(), R.drawable.w_five));
+		diceFaces.get(0).add(
+				bf.decodeResource(this.getResources(), R.drawable.w_six));
 		return diceFaces;
-    }
+	}
 
 	@Override
 	public void onClick(View v) {
-		v.post(new Runnable(){
+		switch (v.getId()) {
+		case 0:
+			v.post(new Runnable() {
+				@Override
+				public void run() {
+					dMan.rollAll();
+				}
+			});break;
+		default:break;
+		}
+	}
+	
 
-			@Override
-			public void run() {
-				dMan.rollAll();
-				
-			}
-			
-		});
+	@Override
+	public boolean onTouch(View v, MotionEvent me) {
+		v.post(new DTouchRun(v,me));
+		return false;
+	}
+	
+	private class DTouchRun implements Runnable{
+		private View v;
+		private MotionEvent me;
+		public DTouchRun(View v, MotionEvent me){
+			this.v=v;
+			this.me=me;
+		}
+
+		@Override
+		public void run() {
+			int[] coords=new int[]{1,1};//holder for dviews location on screen
+			v.getLocationOnScreen(coords);//get dviews location
+			//use adjusted raw coords of event to get the relative view coords.
+			Interactible i=dView.getInteractible(me.getRawX()-coords[0],me.getRawY()-coords[1]);
+			if(i!=null)i.touched();
+		}
 		
 	}
-    
-    
+
 }
