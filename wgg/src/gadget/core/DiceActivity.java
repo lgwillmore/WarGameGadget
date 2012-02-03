@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Display;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,7 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-public class DiceActivity extends Activity implements OnClickListener, OnTouchListener {
+public class DiceActivity extends Activity implements OnClickListener,OnTouchListener  {
 
 	private DiceManager dMan;
 	private DiceTableView dView;
@@ -96,7 +97,6 @@ public class DiceActivity extends Activity implements OnClickListener, OnTouchLi
 	}
 	
 
-	@Override
 	public boolean onTouch(View v, MotionEvent me) {
 		v.post(new DTouchRun(v,me));
 		return false;
@@ -121,4 +121,7 @@ public class DiceActivity extends Activity implements OnClickListener, OnTouchLi
 		
 	}
 
+	
+
+	
 }

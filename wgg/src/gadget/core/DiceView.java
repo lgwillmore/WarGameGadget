@@ -12,30 +12,25 @@ import android.graphics.Paint;
 import android.widget.ImageView;
 
 public class DiceView implements Interactible{
-	private float x,y,width;
+	private float x,y,pu,width;
 	private Dice dice;
 	private static ArrayList<ArrayList<Bitmap>> diceFaces;
 	private static final int WHITE=0,RED=1,BlUE=2,GREEN=3;
 	
 	
 	
-	public DiceView(int x, int y, int width, Dice d){
+	public DiceView(int x, int y, int width,int pu, Dice d){
 		this.x=new Float(x);
 		this.y=new Float(y);
 		this.width=new Float(width);
 		this.dice=d;
-		
+		this.pu=pu;
 	}
 	public void draw(Canvas c) {
-		/*Paint p=new Paint();
+		Paint p=new Paint();
 		p.setColor(Color.BLUE);
-		c.drawRect(x, y, x+width, y+width, p);*/
-		if(!dice.isSelected())c.drawBitmap(lookUpDiceFace(), x, y, null);
-		else{
-			Paint p=new Paint();
-			p.setColor(Color.BLUE);
-			c.drawRect(x, y, x+width, y+width, p);
-		}
+		if(dice.isSelected())c.drawRect(x-pu, y-pu, x+width+pu, y+width+pu, p);
+		c.drawBitmap(lookUpDiceFace(), x, y, null);
 	}
 	
 	public Bitmap lookUpDiceFace(){

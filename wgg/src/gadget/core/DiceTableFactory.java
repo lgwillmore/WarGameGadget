@@ -93,7 +93,7 @@ public class DiceTableFactory {
 				else x=x+midColSpace;
 				Dice d =new Dice(0);
 				dm.addDice(d);
-				diceSlots.put(new Pair(row,col), new DiceView(x,y,ratios[diceWidth],d));
+				diceSlots.put(new Pair(row,col), new DiceView(x,y,ratios[diceWidth],pu,d));
 				col++;
 			}
 			row++;
