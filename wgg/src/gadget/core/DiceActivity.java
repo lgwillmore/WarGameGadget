@@ -7,12 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class DiceActivity extends Activity implements OnClickListener,OnTouchListener  {
 
@@ -21,12 +24,15 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 	private DisplayMetrics screen;
 	private LinearLayout top;
 	Button roll;
+	TextView out;
+	GestureDetector gd;
+	
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		gd = new GestureDetector(new MyGestureDetector());
 		dMan = new DiceManager();
 		screen = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(screen);
@@ -44,6 +50,14 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 		dView.setId(1);
 		dView.setOnTouchListener(this);
 		top.addView(dView);
+		
+		/*
+		out=new TextView(this);
+		out.setText("Ready to Test stuff");
+		top.addView(out);*/
+				
+				
+				
 		roll = new Button(this);
 		roll.setOnClickListener(this);
 		roll.setText(R.string.rollAllButton);
@@ -89,22 +103,22 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 
 	@Override
 	public boolean onTouch(View v, MotionEvent me) {
+		return gd.onTouchEvent(me);
+		/*
 		v.post(new DTouchRun(v,me));
-		return false;
+		return false;*/
 	}
 	
 	private class DTouchRun implements Runnable{
-		private View v;
 		private MotionEvent me;
-		public DTouchRun(View v, MotionEvent me){
-			this.v=v;
+		public DTouchRun(MotionEvent me){
 			this.me=me;
 		}
 
 		@Override
 		public void run() {
 			int[] coords=new int[]{1,1};//holder for dviews location on screen
-			v.getLocationOnScreen(coords);//get dviews location
+			top.getLocationOnScreen(coords);//get dviews location
 			//use adjusted raw coords of event to get the relative view coords.
 			Interactible i=dView.getInteractible(me.getRawX()-coords[0],me.getRawY()-coords[1]);
 			if(i!=null)i.touched();
@@ -113,9 +127,50 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 	}
 	
 	/*
-	 * OnTouch listener is the listener I want to use. I just need to query the mes to work out what sort of gesture is occuring.
+	 * A Listener to handle a bunch of the mechanics of the screen being touched.
 	 */
+	private class MyGestureDetector extends SimpleOnGestureListener{
 
+		@Override
+		public boolean onDown(MotionEvent e) {
+			// TODO Auto-generated method stub
+			return super.onDown(e);
+		}
+
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			// TODO Auto-generated method stub
+			return super.onFling(e1, e2, velocityX, velocityY);
+		}
+
+		@Override
+		public void onLongPress(MotionEvent e) {
+			// TODO Auto-generated method stub
+			super.onLongPress(e);
+		}
+
+		@Override
+		public boolean onScroll(MotionEvent e1, MotionEvent e2,
+				float distanceX, float distanceY) {
+			// TODO Auto-generated method stub
+			return super.onScroll(e1, e2, distanceX, distanceY);
+		}
+
+		@Override
+		public void onShowPress(MotionEvent e) {
+			// TODO Auto-generated method stub
+			super.onShowPress(e);
+		}
+
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent me) {
+			dView.post(new DTouchRun(me));
+			return true;
+		}
+
+		
+	}
 	
 
 	
