@@ -2,17 +2,14 @@ package gadget.core;
 
 import java.util.ArrayList;
 
-import android.R;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.widget.ImageView;
 
 public class DiceView implements Interactible{
-	private float x,y,pu,width;
+	private int x,y,width;
+	int pu;
 	private Dice dice;
 	private static ArrayList<ArrayList<Bitmap>> diceFaces;
 	private static final int WHITE=0,RED=1,BlUE=2,GREEN=3;
@@ -20,9 +17,9 @@ public class DiceView implements Interactible{
 	
 	
 	public DiceView(int x, int y, int width,int pu, Dice d){
-		this.x=new Float(x);
-		this.y=new Float(y);
-		this.width=new Float(width);
+		this.x=x;
+		this.y=y;
+		this.width=width;
 		this.dice=d;
 		this.pu=pu;
 	}
@@ -54,4 +51,18 @@ public class DiceView implements Interactible{
 	public void touched() {
 		dice.setSelected();
 	}
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
+	}
+	public int getPu() {
+		return pu;
+	}
+	public int getWidth() {
+		return width;
+	}
+	
+	
 }

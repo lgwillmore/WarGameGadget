@@ -5,10 +5,8 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 import android.util.Pair;
-import android.view.Display;
 import android.view.SurfaceHolder;
 
 public class DiceTableFactory {
@@ -16,9 +14,9 @@ public class DiceTableFactory {
 	
 	int pu;
 	int[] ratios = {20,1,2,5,20,4};
-	int diceWidth=0,border=1,gap=2,topgap=3,tagwidth=4,taglength=5;
+	int diceWidth=0,border=1,gap=2,topgap=3,tagWidth=4,tagHeight=5;
 	int topRowspace,leftColspace,midRowspace,midColSpace;
-	private static final int WHITE=0,RED=1,BlUE=2,GREEN=3;
+	private static final int WHITE=0,RED=1,BLUE=2,GREEN=3;
 	private HashMap<Pair,DiceView> diceSlots;
 	private ArrayList<ArrayList<Bitmap>> diceFaces;
 	private SurfaceHolder holder;
@@ -56,7 +54,8 @@ public class DiceTableFactory {
 	private void buildDGVs() {
 		dgvs=new ArrayList<DiceGroupView>();
 		for(int i=0;i<5;i++){
-			dgvs.add(new DiceGroupView(dm.getDiceGroup(i)));
+			dgvs.add(new DiceGroupView(dm.getDiceGroup(i),pu,topRowspace-ratios[gap],leftColspace-ratios[gap],
+					ratios[diceWidth]+2*ratios[border]+ratios[gap],ratios[tagWidth],ratios[tagHeight]));
 		}
 		for(DiceView dv:diceSlots.values()){
 			dgvs.get(WHITE).addDiceV(dv);

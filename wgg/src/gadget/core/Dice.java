@@ -25,11 +25,12 @@ public class Dice implements Runnable{
 	
 	private void init(){
 		myRand=new Random();
-		long seed= (long)(Math.random()*(long)10000);
+		long seed= (long)(Math.random()*10000);
 		myRand.setSeed(System.currentTimeMillis()+seed);
 		SIDE_UP=1;
 	}
 	
+	@Override
 	public void run() {
 		startTime = System.currentTimeMillis();
 		longRoll();

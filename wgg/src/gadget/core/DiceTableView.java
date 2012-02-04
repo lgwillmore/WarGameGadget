@@ -5,16 +5,9 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Pair;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 
 public class DiceTableView extends SurfaceView implements Runnable{

@@ -40,4 +40,10 @@ public class DiceGroup {
 		groupSave=save;
 	}
 
+	public int getColour() {
+		return colour;
+	}
+	
+	
+
 }

@@ -1,27 +1,18 @@
 package gadget.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import game.core.R;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Pair;
-import android.view.Display;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout.LayoutParams;
 
 public class DiceActivity extends Activity implements OnClickListener,OnTouchListener  {
 
@@ -63,22 +54,21 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 	private ArrayList<ArrayList<Bitmap>> buildBitmaps() {
 		//
 		ArrayList<ArrayList<Bitmap>> diceFaces = new ArrayList<ArrayList<Bitmap>>();
-		BitmapFactory bf = new BitmapFactory();
 		for (int i = 0; i < 4; i++) {
 			diceFaces.add(new ArrayList<Bitmap>());
 		}
 		diceFaces.get(0).add(
-				bf.decodeResource(this.getResources(), R.drawable.w_one));
+				BitmapFactory.decodeResource(this.getResources(), R.drawable.w_one));
 		diceFaces.get(0).add(
-				bf.decodeResource(this.getResources(), R.drawable.w_two));
+				BitmapFactory.decodeResource(this.getResources(), R.drawable.w_two));
 		diceFaces.get(0).add(
-				bf.decodeResource(this.getResources(), R.drawable.w_three));
+				BitmapFactory.decodeResource(this.getResources(), R.drawable.w_three));
 		diceFaces.get(0).add(
-				bf.decodeResource(this.getResources(), R.drawable.w_four));
+				BitmapFactory.decodeResource(this.getResources(), R.drawable.w_four));
 		diceFaces.get(0).add(
-				bf.decodeResource(this.getResources(), R.drawable.w_five));
+				BitmapFactory.decodeResource(this.getResources(), R.drawable.w_five));
 		diceFaces.get(0).add(
-				bf.decodeResource(this.getResources(), R.drawable.w_six));
+				BitmapFactory.decodeResource(this.getResources(), R.drawable.w_six));
 		return diceFaces;
 	}
 
@@ -97,6 +87,7 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 	}
 	
 
+	@Override
 	public boolean onTouch(View v, MotionEvent me) {
 		v.post(new DTouchRun(v,me));
 		return false;
@@ -120,6 +111,10 @@ public class DiceActivity extends Activity implements OnClickListener,OnTouchLis
 		}
 		
 	}
+	
+	/*
+	 * OnTouch listener is the listener I want to use. I just need to query the mes to work out what sort of gesture is occuring.
+	 */
 
 	
 
