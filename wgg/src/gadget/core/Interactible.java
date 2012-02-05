@@ -4,6 +4,8 @@ public interface Interactible {
 	
 	public boolean isMe(float x, float y);
 	
-	public void touched();
+	public void singleTapped();
+
+	public void longPressed();
 
 }

@@ -48,7 +48,7 @@ public class DiceView implements Interactible{
 		return false;
 	}
 	@Override
-	public void touched() {
+	public void singleTapped() {
 		dice.setSelected();
 	}
 	public int getX() {
@@ -62,6 +62,15 @@ public class DiceView implements Interactible{
 	}
 	public int getWidth() {
 		return width;
+	}
+	@Override
+	public void longPressed() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public String getMessage(){
+		return "I am here";
 	}
 	
 	

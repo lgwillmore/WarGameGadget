@@ -4,5 +4,6 @@
     <string name="hello">Hello World, FrontActivity!</string>
     <string name="app_name">WarGameGadget</string>
     <string name="rollAllButton">Roll All!</string>
+    <string name="remove">Remove</string>
 
 </resources>
