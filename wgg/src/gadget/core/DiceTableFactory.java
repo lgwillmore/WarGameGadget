@@ -32,9 +32,9 @@ public class DiceTableFactory {
 		context=c;	}
 	
 	public DiceTableView getDiceTableView(){
+		calculateSpacing(screen.widthPixels,screen.heightPixels);
 		createDiceGroups();
 		dtv=new DiceTableView(context,dgvs);
-		calculateSpacing(screen.widthPixels,screen.heightPixels);
 		addDiceViews();
 		return dtv;
 	}	
@@ -42,7 +42,10 @@ public class DiceTableFactory {
 	private void createDiceGroups() {
 		dgvs=new ArrayList<DiceGroupView>();
 		for(int i=0;i<4;i++){
-			dgvs.add(new DiceGroupView(context,dm.getDiceGroup(i)));
+			DiceGroupView dgv=new DiceGroupView(context,dm.getDiceGroup(i));
+			dgv.setMaxHeight(gbh);
+			dgv.setText("Test");
+			dgvs.add(dgv);
 		}
 	}
 
@@ -53,7 +56,7 @@ public class DiceTableFactory {
 			
 			for (int j=0;j<5;j++){
 				Dice d=new Dice();
-				DiceView dv=new DiceView(context,d);
+				DiceView dv=new DiceView(context,d,i,j);
 				//add dice to dicemanager and group.
 				dm.addDice(d);
 				//add diceview to a group
@@ -62,7 +65,6 @@ public class DiceTableFactory {
 				dv.setAdjustViewBounds(true);
 				dv.setMaxHeight(dw+2*dp);
 				dv.setMaxWidth(dw+2*dp);
-				//iv.setBackgroundColor(Color.GREEN);
 				dv.setPadding(dp, 0, dp, 0);
 				r.addView(dv);
 			}
@@ -72,6 +74,7 @@ public class DiceTableFactory {
 			dtv.addView(g);
 			dtv.addView(r);
 		}
+		dtv.positionGroupViewTabs();
 	}
 
 	public void calculateSpacing(int width,int height){

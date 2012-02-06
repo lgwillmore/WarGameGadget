@@ -22,7 +22,7 @@ public class DiceActivity extends Activity {
 		dm=new DiceManager();
 		DiceTableView dt =new DiceTableFactory(this,screen,dm).getDiceTableView();
 		setContentView(dt);
-		new Thread(dt).start();
+		
 	}
 
 	

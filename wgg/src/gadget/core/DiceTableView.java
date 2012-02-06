@@ -36,7 +36,21 @@ public class DiceTableView extends TableLayout implements Runnable{
 	}
 	
 	public void positionGroupViewTabs(){
-		
+		for(int i=0;i<dgViews.size();i++){
+			DiceGroupView dgv=dgViews.get(i);
+			if(dgv.hasDice()){
+				DiceView dv=dgv.getTopRight();
+				if(dgv.getTagRow()!=-1){
+					TableRow old=(TableRow)this.getChildAt(dgv.getTagRow());
+					old.removeView(dgv);
+				}
+				TableRow row=(TableRow)this.getChildAt(dv.getRow()*2);
+				dgv.setTagRow(dv.getRow()*2);
+				dgv.setTagCol(dv.getColumn());
+				row.addView(dgv, dv.getColumn());
+				//bug here: Need to put place holders in the rows?
+			}
+		}
 	}
 	
 	
