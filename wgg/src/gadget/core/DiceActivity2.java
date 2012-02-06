@@ -21,7 +21,7 @@ public class DiceActivity2 extends Activity {
 		
 		DiceTableView2 dt =new DiceTableView2(this,screen);
 		setContentView(dt);
-		
+		new Thread(dt).start();
 	}
 
 	
