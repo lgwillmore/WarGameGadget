@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class DiceManager {
 	private ArrayList<DiceGroup> dgs;
-	private static final int WHITE=0,RED=1,BlUE=2,GREEN=3;
 	private int globalSave;
 	
 	public DiceManager(){
@@ -15,7 +14,7 @@ public class DiceManager {
 	}
 	
 	public void addDice(Dice d){
-		dgs.get(WHITE).addDice(d);
+		dgs.get(Util.WHITE).addDice(d);
 	}
 	
 	public void rollAll(){

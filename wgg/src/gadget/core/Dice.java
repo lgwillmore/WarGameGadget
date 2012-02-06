@@ -11,13 +11,13 @@ public class Dice implements Runnable{
 	private static final long MAX_AIRTIME = 500;// milliseconds
 	private static final double BOUNCE_PROBABILITY = 0.80;
 	private long startTime;
-	private int groupColour;
+	private DiceGroup parent;
+	
 	private boolean selected=false;
 	
 	
-	public Dice(int colour){
+	public Dice(){
 		SIDES=6;
-		groupColour=colour;
 		init();
 	}
 	
@@ -71,9 +71,7 @@ public class Dice implements Runnable{
 		return SIDE_UP;
 	}
 	
-	public int getGroupColour(){
-		return groupColour;
-	}
+	
 	
 	public boolean isSelected(){
 		return selected;
@@ -83,6 +81,20 @@ public class Dice implements Runnable{
 	public void setSelected() {
 		selected=!selected;
 	}
+
+
+
+	public DiceGroup getParent() {
+		return parent;
+	}
+
+
+
+	public void setParent(DiceGroup parent) {
+		this.parent = parent;
+	}
+	
+	
 	
 	
 }

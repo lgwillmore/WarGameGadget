@@ -16,6 +16,7 @@ public class DiceGroup {
 	
 	public void addDice(Dice d){
 		dice.add(d);
+		d.setParent(this);
 	}
 	
 	public void rollAll(){
