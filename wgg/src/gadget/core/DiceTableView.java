@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -16,6 +17,7 @@ import android.widget.TableRow;
 public class DiceTableView extends TableLayout implements Runnable{
 	
 	private ArrayList<DiceGroupView> dgViews;
+	private ArrayList<Pair<Integer,Integer>> dgVLocs;
 	private Context context;
 	private boolean disabled=false;
 	
@@ -24,6 +26,10 @@ public class DiceTableView extends TableLayout implements Runnable{
 		super(context);
 		this.context=context;
 		this.dgViews=dgv;
+		dgVLocs=new ArrayList<Pair<Integer,Integer>>();
+		for(int i=0; i<4;i++){
+			dgVLocs.add(new Pair<Integer,Integer>(-1,-1));
+		}
 	}
 
 	@Override
@@ -38,19 +44,43 @@ public class DiceTableView extends TableLayout implements Runnable{
 	public void positionGroupViewTabs(){
 		for(int i=0;i<dgViews.size();i++){
 			DiceGroupView dgv=dgViews.get(i);
-			if(dgv.hasDice()){
-				DiceView dv=dgv.getTopRight();
-				if(dgv.getTagRow()!=-1){
-					TableRow old=(TableRow)this.getChildAt(dgv.getTagRow());
-					old.removeView(dgv);
+			Pair<Integer,Integer> dgl=dgVLocs.get(i);
+			DiceView dv = dgv.getTopRight();
+			if (dgv.hasDice() && dgl.first==-1){
+				TableRow r=(TableRow)this.getChildAt(dv.getRow()*2);
+				r.removeViewAt(dv.getColumn());
+				insertDGV(dgv, dv);
+				updateLocation(i,dv);
+			}
+			else if(!dgv.hasDice() && dgl.first!=-1){
+				removeDGV(i, dgv);
+				updateLocation(i,dv);
+			}			
+			else if(dv!=null){
+				if (dv.getRow()!=dgl.first || dv.getColumn()!=dgl.second){
+					removeDGV(i, dgv);
+					insertDGV(dgv, dv);
+					updateLocation(i,dv);
 				}
-				TableRow row=(TableRow)this.getChildAt(dv.getRow()*2);
-				dgv.setTagRow(dv.getRow()*2);
-				dgv.setTagCol(dv.getColumn());
-				row.addView(dgv, dv.getColumn());
-				//bug here: Need to put place holders in the rows?
 			}
 		}
+	}
+
+	private void removeDGV(int locIndex, DiceGroupView dgv) {
+		TableRow r=(TableRow)this.getChildAt(dgVLocs.get(locIndex).first*2);
+		r.removeViewAt(dgVLocs.get(locIndex).second);
+		r.addView(new ImageView(this.getContext()),dgVLocs.get(locIndex).second);
+	}
+
+	private void updateLocation(int locIndex, DiceView topRight) {
+		dgVLocs.remove(locIndex);
+		if(topRight==null)dgVLocs.add(locIndex, new Pair<Integer,Integer>(-1,-1));
+		else dgVLocs.add(locIndex, new Pair<Integer,Integer>(topRight.getRow(),topRight.getColumn()));
+	}
+
+	private void insertDGV(DiceGroupView dgv, DiceView topRight) {
+		TableRow r=(TableRow)this.getChildAt(topRight.getRow()*2);
+		r.addView(dgv, topRight.getColumn());
 	}
 	
 	

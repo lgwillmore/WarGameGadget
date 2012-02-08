@@ -9,8 +9,7 @@ import android.widget.TextView;
 public class DiceGroupView extends TextView{
 	
 	private ArrayList<DiceView> diceVs;
-	private DiceGroup diceG;
-	private int tagRow=-1,tagCol=-1;
+	private DiceGroup diceG;	
 
 	public DiceGroupView(Context context,DiceGroup dg) {
 		super(context);
@@ -41,21 +40,6 @@ public class DiceGroupView extends TextView{
 		return res;
 	}
 
-	public int getTagRow() {
-		return tagRow;
-	}
-
-	public void setTagRow(int tagRow) {
-		this.tagRow = tagRow;
-	}
-
-	public int getTagCol() {
-		return tagCol;
-	}
-
-	public void setTagCol(int tagCol) {
-		this.tagCol = tagCol;
-	}
 	
 	
 
