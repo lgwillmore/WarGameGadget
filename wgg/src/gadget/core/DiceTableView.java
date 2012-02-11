@@ -42,6 +42,7 @@ public class DiceTableView extends TableLayout implements Runnable{
 	}
 	
 	public void positionGroupViewTabs(){
+		//got a bug here somewhere. To do with the place holders I think
 		for(int i=0;i<dgViews.size();i++){
 			DiceGroupView dgv=dgViews.get(i);
 			Pair<Integer,Integer> dgl=dgVLocs.get(i);
