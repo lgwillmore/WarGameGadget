@@ -67,6 +67,7 @@ public class DiceTableFactory {
 				dv.setMaxWidth(dw+2*dp);
 				dv.setPadding(dp, 0, dp, 0);
 				r.addView(dv);
+				g.addView(new ImageView(context));
 			}
 			g.setMinimumHeight(gbh);
 			g.setPadding(grp, grp, grp, grp);
