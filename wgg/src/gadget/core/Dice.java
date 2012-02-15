@@ -30,7 +30,6 @@ public class Dice implements Runnable{
 		SIDE_UP=1;
 	}
 	
-	@Override
 	public void run() {
 		startTime = System.currentTimeMillis();
 		longRoll();

@@ -32,7 +32,6 @@ public class DiceTableView extends TableLayout implements Runnable{
 		}
 	}
 
-	@Override
 	public void run() {
 		while(!disabled){
 			for(int i=0;i<this.getChildCount();i++){
